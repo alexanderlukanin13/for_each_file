@@ -56,7 +56,7 @@ Print all ``*.txt`` files only in a top-level directory:
 
 .. code-block:: python
 
-    >>> for_each_file('tests/data/example', print, pattern='*.txt')
+    >>> for_each_file('example', print, pattern='*.txt')
     example/shapes.txt
 
 Print all ``*.txt`` files in first-level subdirectories:
@@ -88,6 +88,8 @@ Iterate over ``pathlib.Path`` objects:
 Pasting all files together into corpus
 --------------------------------------
 
+Use ``for_each_text`` to work with plain text contents directly.
+
 .. code-block:: python
 
     >>> with open('corpus.txt', 'w') as corpus:
@@ -98,13 +100,13 @@ Convert files from one directory to another directory
 
 Let's say you want to extract OCR text from a large collection of ``*.pdf`` into ``*.txt`` files.
 
-You have a wonderful function ``pdf_to_text(pdf_filename, txt_filename)`` from another package,
+You have a wonderful function ``pdftotext(pdf_filename, txt_filename)`` from another package,
 it does the job well, but how to apply it to a nested directory tree?
 
 .. code-block:: python
 
     >>> from for_each_file import convert_files
-    >>> convert_files('input/directory/with/pdfs', 'output/directory/for/txt', pdf_to_text, pattern='**/*.pdf', rename=lambda p: p.with_suffix('.txt'))
+    >>> convert_files('input_pdfs', 'output_txt', pdftotext, pattern='**/*.pdf', rename=lambda p: p.with_suffix('.txt'))
 
 That's all. You'll have the same directory structure in output, and same file names, but with ``*.txt`` suffix instead of ``*.pdf``.
 
