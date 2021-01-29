@@ -7,6 +7,9 @@ from pathlib import Path
 from typing import Callable, Iterable, Tuple, Union, Any
 
 
+Rename = Union[None, Callable[[str], str]]
+
+
 class InvalidDirectoryError(Exception):
     pass
 
@@ -49,7 +52,7 @@ def for_each_text(dir_path: Union[str, Path], function: Callable[[str], Any], pa
         function(file_path)
 
 
-def iter_file_pairs(source_dir: Union[str, Path], target_dir: Union[str, Path], pattern: str = '**/*') -> Iterable[Tuple[Path, Path]]:
+def iter_file_pairs(source_dir: Union[str, Path], target_dir: Union[str, Path], pattern: str = '**/*', rename: Rename = None) -> Iterable[Tuple[Path, Path]]:
     # Make sure caller is not messing up the directory structure.
     source_dir = _ensure_dir(source_dir)
     target_dir = _ensure_dir(target_dir, must_exist=False)
@@ -60,22 +63,24 @@ def iter_file_pairs(source_dir: Union[str, Path], target_dir: Union[str, Path], 
 
     for source_file_path in iter_files(source_dir, pattern):
         target_file_path = target_dir / source_file_path.relative_to(source_dir)
+        if rename:
+            target_file_path = target_file_path.parent / rename(target_file_path.name)
         if target_file_path.parent not in parents:
             os.makedirs(target_file_path.parent, exist_ok=True)
             parents.add(target_file_path.parent)
         yield source_file_path, target_file_path
 
 
-def convert_files(source_dir: Union[str, Path], target_dir: Union[str, Path], function: Callable[[Path, Path], Any], pattern: str = '**/*') -> None:
-    for source_file_path, target_file_path in iter_file_pairs(source_dir, target_dir, pattern):
+def convert_files(source_dir: Union[str, Path], target_dir: Union[str, Path], function: Callable[[Path, Path], Any], pattern: str = '**/*', rename: Rename = None) -> None:
+    for source_file_path, target_file_path in iter_file_pairs(source_dir, target_dir, pattern, rename):
         function(source_file_path, target_file_path)
 
 
-def iter_text_pairs(source_dir: Union[str, Path], target_dir: Union[str, Path], pattern: str = '**/*', encoding=None, errors=None) -> Iterable[Tuple[str, Path]]:
-    for source_file_path, target_file_path in iter_file_pairs(source_dir, target_dir, pattern):
+def iter_text_pairs(source_dir: Union[str, Path], target_dir: Union[str, Path], pattern: str = '**/*', rename: Rename = None, encoding=None, errors=None) -> Iterable[Tuple[str, Path]]:
+    for source_file_path, target_file_path in iter_file_pairs(source_dir, target_dir, pattern, rename):
         yield source_file_path.read_text(encoding=encoding, errors=errors), target_file_path
 
 
-def convert_texts(source_dir: Union[str, Path], target_dir: Union[str, Path], function: Callable[[str, Path], Any], pattern: str = '**/*', encoding=None, errors=None) -> None:
-    for source_text, target_file_path in iter_text_pairs(source_dir, target_dir, pattern, encoding, errors):
+def convert_texts(source_dir: Union[str, Path], target_dir: Union[str, Path], function: Callable[[str, Path], Any], pattern: str = '**/*', rename: Rename = None, encoding=None, errors=None) -> None:
+    for source_text, target_file_path in iter_text_pairs(source_dir, target_dir, pattern, rename, encoding, errors):
         target_file_path.write_text(function(source_text), encoding=encoding, errors=errors)

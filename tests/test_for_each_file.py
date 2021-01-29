@@ -134,9 +134,8 @@ def test_convert_files_txt_only(tmpdir):
 def test_convert_text(tmpdir):
     source_dir = DATA_DIR / 'example1'
 
-    def convert(source_text, target_filename):
-        with open(target_filename, 'w') as file:
-            file.write(source_text.split(' ')[0])
+    def convert(source_text):
+        return source_text.split(' ')[0]
 
     convert_texts(source_dir, tmpdir, convert, pattern='**/*.txt', encoding='utf8')
     assert list(iter_texts(tmpdir)) == [

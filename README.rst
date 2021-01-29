@@ -135,3 +135,10 @@ Gotchas
   If you remove files during processing and before they had a chance to be processed, you will see an error.
 
 * Package was not tested with symlinks, and behavior with symlinks is undefined.
+
+Requirements
+------------
+
+* Python 3.6+ (because of typing hints and other nice things).
+
+* No dependencies.
