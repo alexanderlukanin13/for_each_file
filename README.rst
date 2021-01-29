@@ -39,7 +39,7 @@ But wait, there's more!
 Filter directories and files via glob()
 ---------------------------------------
 
-All syntax of :py:func:`pathlib.Path.glob` is supported.
+All syntax of `pathlib.Path.glob <https://docs.python.org/3/library/pathlib.html#pathlib.Path.glob>`_ is supported.
 
 Print all ``*.txt`` files in *all* subdirectories:
 
@@ -61,6 +61,8 @@ Print all ``*.txt`` files only in a top-level directory:
 
 Print all ``*.txt`` files in first-level subdirectories:
 
+.. code-block:: python
+
     >>> for_each_file('example', print, pattern='*/*.txt')
     example/aa/numbers.txt
     example/aa/pets.txt
@@ -69,7 +71,7 @@ Print all ``*.txt`` files in first-level subdirectories:
 Files as an iterable
 --------------------
 
-Iterate over :py:class:`pathlib.Path` objects:
+Iterate over ``pathlib.Path`` objects:
 
 .. code-block:: python
 
@@ -112,17 +114,22 @@ Convert text files
 ------------------
 
 If both input and output is plain text, use ``convert_texts`` and forget about reading and writing files.
-For example, here's a snippet which MAKES EVERYTHING IN EVERY FILE UPPERCASE:
+For example, here's a snippet which MAKES EVERYTHING UPPERCASE:
 
 .. code-block:: python
 
     >>> convert_texts('example', 'output', str.upper, pattern='**/*.txt')
 
-We open ``output/aa/numbers.txt`` and we see:
 
-.. code-block:: text
+Gotchas
+-------
 
-    ONE TWO
-    THREE
+* Any unhandled exception raised from your function will break the loop.
+  Make sure to suppress exceptions which are tolerable.
+  Error handling (such as logging) is out of scope of this package.
 
+* Collecting list of files according to glob happens (almost) instantly before any processing takes place.
+  If you add files to directory during long processing, these new files will not be detected on the fly.
+  If you remove files during processing and before they had a chance to be processed, you will see an error.
 
+* Package was not tested with symlinks, and behavior with symlinks is undefined.
