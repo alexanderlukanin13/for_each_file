@@ -93,7 +93,7 @@ Use ``for_each_text`` to work with plain text contents directly.
 .. code-block:: python
 
     >>> with open('corpus.txt', 'w') as corpus:
-    ...   for_each_text('tests/data/example1', corpus.write, pattern='**/*.txt')
+    ...   for_each_text('example1', corpus.write, pattern='**/*.txt')
 
 Convert files from one directory to another directory
 -----------------------------------------------------
@@ -123,8 +123,8 @@ For example, here's a snippet which MAKES EVERYTHING UPPERCASE:
     >>> convert_texts('example', 'output', str.upper, pattern='**/*.txt')
 
 
-Gotchas
--------
+Gotchas and Limitations
+-----------------------
 
 * Any unhandled exception raised from your function will break the loop.
   Make sure to suppress exceptions which are tolerable.
@@ -133,6 +133,9 @@ Gotchas
 * Collecting list of files according to glob happens (almost) instantly before any processing takes place.
   If you add files to directory during long processing, these new files will not be detected on the fly.
   If you remove files during processing and before they had a chance to be processed, you will see an error.
+
+* Only files are considered. Directories are traversed in a search for files; and during conversion,
+directories are created when necessary; but that's it. You can't do anything custom with directories.
 
 * Package was not tested with symlinks, and behavior with symlinks is undefined.
 
