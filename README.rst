@@ -2,6 +2,8 @@
 iterfiles
 =========
 
+|pypi| |build| |coverage|
+
 
 .. image:: https://img.shields.io/pypi/v/iterfiles.svg
         :target: https://pypi.python.org/pypi/iterfiles
@@ -142,3 +144,20 @@ Requirements
 * Python 3.6+
 
 * No dependencies
+
+
+.. |pypi| image:: https://img.shields.io/pypi/v/iterfiles.svg
+    :target: https://pypi.python.org/pypi/iterfiles
+    :alt: pypi
+
+.. |build| image:: https://api.travis-ci.org/alexanderlukanin13/iterfiles.svg?branch=master
+    :target: https://travis-ci.org/alexanderlukanin13/iterfiles?branch=master
+    :alt: build status
+
+.. |coverage| image:: https://coveralls.io/repos/alexanderlukanin13/iterfiles/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/alexanderlukanin13/iterfiles?branch=master
+    :alt: coverage
+
+.. |docs| image:: https://img.shields.io/readthedocs/iterfiles.svg
+    :target: http://iterfiles.readthedocs.io/en/latest/
+    :alt: documentation

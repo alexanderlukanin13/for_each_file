@@ -11,8 +11,6 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 
-test_requirements = ['pytest==6.1.0']
-
 setup(
     author="Alexander Lukanin",
     author_email='alexander.lukanin.13@gmail.com',
@@ -34,7 +32,6 @@ setup(
     name='iterfiles',
     packages=find_packages(include=['iterfiles', 'iterfiles.*']),
     test_suite='tests',
-    tests_require=test_requirements,
     url='https://github.com/alexanderlukanin13/iterfiles',
     version='0.1.0',
     zip_safe=True,

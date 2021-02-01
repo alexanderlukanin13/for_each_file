@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Callable, Iterable, Tuple, Union, Any
 
 
-Rename = Union[None, Callable[[str], str]]
+Rename = Union[None, Callable[[Path], Union[str, Path]]]
 
 
 class InvalidDirectoryError(Exception):
@@ -89,7 +89,8 @@ def iter_convert(source_dir: Union[str, Path], target_dir: Union[str, Path], pat
     for source_file_path in iter_files(source_dir, pattern):
         target_file_path = target_dir / source_file_path.relative_to(source_dir)
         if rename:
-            target_file_path = target_file_path.parent / rename(target_file_path.name)
+            new_name = rename(target_file_path)
+            target_file_path = target_file_path.parent / (new_name.name if type(new_name) is Path else new_name)
         if target_file_path.parent not in parents:
             os.makedirs(target_file_path.parent, exist_ok=True)
             parents.add(target_file_path.parent)

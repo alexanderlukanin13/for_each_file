@@ -128,6 +128,24 @@ def test_convert_files_txt_only(tmpdir):
     ]
 
 
+def test_convert_rename(tmpdir):
+    source_dir = DATA_DIR / 'example1'
+    target_dir = tmpdir
+    convert_files(source_dir, tmpdir, shutil.copy, pattern='**/*.dat', rename=lambda p: p.with_suffix('.foo'))
+    assert list(iter_files(tmpdir, pattern='**/*.foo')) == [
+        target_dir / 'aa' / 'colors.foo',
+    ]
+
+
+def test_convert_rename_str(tmpdir):
+    source_dir = DATA_DIR / 'example1'
+    target_dir = tmpdir
+    convert_files(source_dir, tmpdir, shutil.copy, pattern='**/*.dat', rename=lambda p: p.with_suffix('.foo').name)
+    assert list(iter_files(tmpdir, pattern='**/*.foo')) == [
+        target_dir / 'aa' / 'colors.foo',
+    ]
+
+
 def test_convert_text(tmpdir):
     source_dir = DATA_DIR / 'example1'
 
