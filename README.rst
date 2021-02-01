@@ -4,13 +4,6 @@ iterfiles
 
 |pypi| |build| |coverage|
 
-
-.. image:: https://img.shields.io/pypi/v/iterfiles.svg
-        :target: https://pypi.python.org/pypi/iterfiles
-
-.. image:: https://img.shields.io/travis/alexanderlukanin13/iterfiles.svg
-        :target: https://travis-ci.com/alexanderlukanin13/iterfiles
-
 Find and process files in a Pythonic way, without boilerplate code. Implements ``for_each_file`` and other common scenarios.
 
 .. code-block:: python
