@@ -10,11 +10,8 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = []
 
-setup_requirements = ['pytest-runner', ]
-
-test_requirements = ['pytest>=3', ]
+test_requirements = ['pytest==6.1.0']
 
 setup(
     author="Alexander Lukanin",
@@ -29,16 +26,14 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
-    description="Call function for each file in a directory tree, with glob filter. "
-                "Optionally write output to another directory tree with the same structure.",
-    install_requires=requirements,
+    description="Find and process files in a Pythonic way, without boilerplate code. "
+                "Implements for_each_file and other common scenarios.",
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='iterfiles',
+    keywords=['file', 'pattern', 'directory', 'tree', 'traverse', 'find', 'convert'],
     name='iterfiles',
     packages=find_packages(include=['iterfiles', 'iterfiles.*']),
-    setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/alexanderlukanin13/iterfiles',
