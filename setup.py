@@ -26,8 +26,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
-    description="Find and process files in a Pythonic way, without boilerplate code. "
-                "Implements for_each_file and other common scenarios.",
+    description="Find and process files in a Pythonic way, without boilerplate code.",
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,

@@ -9,7 +9,14 @@ iterfiles
 .. image:: https://img.shields.io/travis/alexanderlukanin13/iterfiles.svg
         :target: https://travis-ci.com/alexanderlukanin13/iterfiles
 
-Find and process files in a Pythonic way, without boilerplate code. Implements for_each_file and other common scenarios.
+Find and process files in a Pythonic way, without boilerplate code. Implements ``for_each_file`` and other common scenarios.
+
+.. code-block:: python
+
+    >>> from iterfiles import for_each_file
+    >>> for_each_file('example', print, pattern='*/*.txt')
+
+This will print all ``*.txt`` file names in all first-level subdirectories of ``example``.
 
 Let's say we have following directory structure:
 
@@ -26,15 +33,13 @@ Let's say we have following directory structure:
             cc/
                 cars.txt
 
-Print all ``*.txt`` files in all first-level subdirectories:
+The output will be:
 
-    >>> from iterfiles import for_each_file
-    >>> for_each_file('example', print, pattern='*/*.txt')
+.. code-block:: text
+
     example/aa/numbers.txt
     example/aa/pets.txt
     example/bb/names.txt
-
-But wait, there's more!
 
 Filter directories and files via glob()
 ---------------------------------------
@@ -108,7 +113,7 @@ Convert text files
 ------------------
 
 If both input and output is plain text, use ``convert_texts`` and forget about reading and writing files.
-For example, here's a snippet which MAKES EVERYTHING UPPERCASE:
+For example, here's a snippet which transforms all files into uppercase:
 
 .. code-block:: python
 
