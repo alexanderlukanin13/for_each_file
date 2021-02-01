@@ -59,14 +59,6 @@ Print all ``*.txt`` files only in a top-level directory:
     >>> for_each_file('example', print, pattern='*.txt')
     example/shapes.txt
 
-Print all ``*.txt`` files in first-level subdirectories:
-
-.. code-block:: python
-
-    >>> for_each_file('example', print, pattern='*/*.txt')
-    example/aa/numbers.txt
-    example/aa/pets.txt
-    example/bb/names.txt
 
 Files as an iterable
 --------------------
@@ -93,7 +85,7 @@ Use ``for_each_text`` to work with plain text contents directly.
 .. code-block:: python
 
     >>> with open('corpus.txt', 'w') as corpus:
-    ...   for_each_text('example1', corpus.write, pattern='**/*.txt')
+    ...   for_each_text('example', corpus.write, pattern='**/*.txt')
 
 Convert files from one directory to another directory
 -----------------------------------------------------
@@ -106,7 +98,7 @@ it does the job well, but how to apply it to a nested directory tree?
 .. code-block:: python
 
     >>> from iterfiles import convert_files
-    >>> convert_files('input_pdfs', 'output_txt', pdftotext, pattern='**/*.pdf', rename=lambda p: p.with_suffix('.txt'))
+    >>> convert_files('input_pdfs', 'output_txts', pdftotext, pattern='**/*.pdf', rename=lambda p: p.with_suffix('.txt'))
 
 That's all. You'll have the same directory structure in output, and same file names, but with ``*.txt`` suffix instead of ``*.pdf``.
 
@@ -135,13 +127,13 @@ Gotchas and Limitations
   If you remove files during processing and before they had a chance to be processed, you will see an error.
 
 * Only files are considered. Directories are traversed in a search for files; and during conversion,
-directories are created when necessary; but that's it. You can't do anything custom with directories.
+  directories are created when necessary; but that's it. You can't do anything custom with directories.
 
 * Package was not tested with symlinks, and behavior with symlinks is undefined.
 
 Requirements
 ------------
 
-* Python 3.6+ (because of typing hints and other nice things).
+* Python 3.6+
 
-* No dependencies.
+* No dependencies
