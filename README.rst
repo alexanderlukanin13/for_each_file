@@ -1,15 +1,15 @@
-=============
-for-each-file
-=============
+=========
+iterfiles
+=========
 
 
-.. image:: https://img.shields.io/pypi/v/for_each_file.svg
-        :target: https://pypi.python.org/pypi/for_each_file
+.. image:: https://img.shields.io/pypi/v/iterfiles.svg
+        :target: https://pypi.python.org/pypi/iterfiles
 
-.. image:: https://img.shields.io/travis/alexanderlukanin13/for_each_file.svg
-        :target: https://travis-ci.com/alexanderlukanin13/for_each_file
+.. image:: https://img.shields.io/travis/alexanderlukanin13/iterfiles.svg
+        :target: https://travis-ci.com/alexanderlukanin13/iterfiles
 
-Process each file in subdirectories in a Pythonic way, without boilerplate code.
+Find and process files in a Pythonic way, without boilerplate code. Implements for_each_file and other common scenarios.
 
 Let's say we have following directory structure:
 
@@ -28,7 +28,7 @@ Let's say we have following directory structure:
 
 Print all ``*.txt`` files in all first-level subdirectories:
 
-    >>> from for_each_file import for_each_file
+    >>> from iterfiles import for_each_file
     >>> for_each_file('example', print, pattern='*/*.txt')
     example/aa/numbers.txt
     example/aa/pets.txt
@@ -105,7 +105,7 @@ it does the job well, but how to apply it to a nested directory tree?
 
 .. code-block:: python
 
-    >>> from for_each_file import convert_files
+    >>> from iterfiles import convert_files
     >>> convert_files('input_pdfs', 'output_txt', pdftotext, pattern='**/*.pdf', rename=lambda p: p.with_suffix('.txt'))
 
 That's all. You'll have the same directory structure in output, and same file names, but with ``*.txt`` suffix instead of ``*.pdf``.
