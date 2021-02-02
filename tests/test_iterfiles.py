@@ -20,34 +20,34 @@ def test_for_each_file():
     results = []
     function = Mock(return_value=None, side_effect=lambda x: results.append(x))
     for_each_file(path, function)  # all files
-    assert results == [
+    assert set(results) == {
         path / 'shapes.txt',
         path / 'aa' / 'colors.dat',  # including this
         path / 'aa' / 'numbers.txt',
         path / 'aa' / 'pets.txt',
         path / 'bb' / 'names.txt',
         path / 'bb' / 'cc' / 'cars.txt',
-    ]
+    }
 
     results = []
     function = Mock(return_value=None, side_effect=lambda x: results.append(x))
     for_each_file(path, function, pattern='**/*.txt')  # only *.txt
-    assert results == [
+    assert set(results) == {
         path / 'shapes.txt',
         path / 'aa' / 'numbers.txt',
         path / 'aa' / 'pets.txt',
         path / 'bb' / 'names.txt',
         path / 'bb' / 'cc' / 'cars.txt',
-    ]
+    }
 
     results = []
     function = Mock(return_value=None, side_effect=lambda x: results.append(x))
     for_each_file(path, function, pattern='*/*.txt')  # only *.txt in first level folders
-    assert results == [
+    assert set(results) == {
         path / 'aa' / 'numbers.txt',
         path / 'aa' / 'pets.txt',
         path / 'bb' / 'names.txt',
-    ]
+    }
 
 
 def test_for_each_file_directory_error():
@@ -65,14 +65,14 @@ def test_for_each_text():
     results = []
     function = Mock(return_value=None, side_effect=lambda x: results.append(x))
     for_each_text(path, function)  # all files
-    assert results == [
+    assert set(results) == {
         'Square Circle\nHexagon\n',
         'Red Green\nBlue\n',  # including this
         'One Two\nThree\n',
         'Cat Dog\nParrot\n',
         'Alice Bob\nCarol\n',
         'Toyota Honda\nFord\n',
-    ]
+    }
 
 
 def test_convert_files_directory_error():
@@ -87,63 +87,63 @@ def test_convert_files_directory_error():
 
 def test_convert_files(tmpdir):
     source_dir = DATA_DIR / 'example1'
-    target_dir = tmpdir
+    target_dir = Path(tmpdir)
     convert_files(source_dir, tmpdir, shutil.copy)
-    assert list(iter_files(tmpdir)) == [
+    assert set(iter_files(tmpdir)) == {
         target_dir / 'shapes.txt',
         target_dir / 'aa' / 'colors.dat',  # including this
         target_dir / 'aa' / 'numbers.txt',
         target_dir / 'aa' / 'pets.txt',
         target_dir / 'bb' / 'names.txt',
         target_dir / 'bb' / 'cc' / 'cars.txt',
-    ]
-    assert list(iter_texts(tmpdir)) == [
+    }
+    assert set(iter_texts(tmpdir)) == {
         'Square Circle\nHexagon\n',
         'Red Green\nBlue\n',  # including this
         'One Two\nThree\n',
         'Cat Dog\nParrot\n',
         'Alice Bob\nCarol\n',
         'Toyota Honda\nFord\n',
-    ]
+    }
 
 
 def test_convert_files_txt_only(tmpdir):
     source_dir = DATA_DIR / 'example1'
-    target_dir = tmpdir
+    target_dir = Path(tmpdir)
     convert_files(source_dir, tmpdir, shutil.copy, pattern='**/*.txt')
-    assert list(iter_files(tmpdir)) == [
+    assert set(iter_files(tmpdir)) == {
         target_dir / 'shapes.txt',
         target_dir / 'aa' / 'numbers.txt',
         target_dir / 'aa' / 'pets.txt',
         target_dir / 'bb' / 'names.txt',
         target_dir / 'bb' / 'cc' / 'cars.txt',
-    ]
+    }
     assert not (target_dir / 'aa' / 'colors.dat').exists()
-    assert list(iter_texts(tmpdir)) == [
+    assert set(iter_texts(tmpdir)) == {
         'Square Circle\nHexagon\n',
         'One Two\nThree\n',
         'Cat Dog\nParrot\n',
         'Alice Bob\nCarol\n',
         'Toyota Honda\nFord\n',
-    ]
+    }
 
 
 def test_convert_rename(tmpdir):
     source_dir = DATA_DIR / 'example1'
-    target_dir = tmpdir
+    target_dir = Path(tmpdir)
     convert_files(source_dir, tmpdir, shutil.copy, pattern='**/*.dat', rename=lambda p: p.with_suffix('.foo'))
-    assert list(iter_files(tmpdir, pattern='**/*.foo')) == [
+    assert set(iter_files(tmpdir, pattern='**/*.foo')) == {
         target_dir / 'aa' / 'colors.foo',
-    ]
+    }
 
 
 def test_convert_rename_str(tmpdir):
     source_dir = DATA_DIR / 'example1'
-    target_dir = tmpdir
+    target_dir = Path(tmpdir)
     convert_files(source_dir, tmpdir, shutil.copy, pattern='**/*.dat', rename=lambda p: p.with_suffix('.foo').name)
-    assert list(iter_files(tmpdir, pattern='**/*.foo')) == [
+    assert set(iter_files(tmpdir, pattern='**/*.foo')) == {
         target_dir / 'aa' / 'colors.foo',
-    ]
+    }
 
 
 def test_convert_text(tmpdir):
@@ -153,10 +153,10 @@ def test_convert_text(tmpdir):
         return source_text.split(' ')[0]
 
     convert_texts(source_dir, tmpdir, convert, pattern='**/*.txt', encoding='utf8')
-    assert list(iter_texts(tmpdir)) == [
+    assert set(iter_texts(tmpdir)) == {
         'Square',
         'One',
         'Cat',
         'Alice',
         'Toyota',
-    ]
+    }
