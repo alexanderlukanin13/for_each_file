@@ -67,6 +67,7 @@ Iterate over ``pathlib.Path`` objects:
 
 .. code-block:: python
 
+    >>> from iterfiles import iter_files
     >>> [x.name for x in iter_files('example', '**/*.txt')]
     ['shapes.txt', 'numbers.txt', 'pets.txt', 'names.txt', 'cars.txt']
 
@@ -74,6 +75,7 @@ Iterate over ``pathlib.Path`` objects:
 
 .. code-block:: python
 
+    >>> from iterfiles import iter_texts
     >>> ', '.join(x.split(' ')[0] for x in iter_texts('example', pattern='**/*.txt'))
     'Square, One, Cat, Alice, Toyota'
 
@@ -112,6 +114,7 @@ For example, here's a snippet which transforms all files into uppercase:
 
 .. code-block:: python
 
+    >>> from iterfiles import convert_texts
     >>> convert_texts('example', 'output', str.upper, pattern='**/*.txt')
 
 
